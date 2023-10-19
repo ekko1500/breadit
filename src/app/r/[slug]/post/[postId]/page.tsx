@@ -43,34 +43,34 @@ const SubRedditPostPage = async ({ params }: SubRedditPostPageProps) => {
 
   return (
     <div>
-      <div className="h-full flex flex-col sm:flex-row items-center sm:items-start justify-between">
-        <Suspense fallback={<PostVoteShell />}>
-          {/* @ts-expect-error server component */}
-          <PostVoteServer
-            postId={post?.id ?? cachedPost.id}
-            getData={async () => {
-              return await db.post.findUnique({
-                where: {
-                  id: params.postId,
-                },
-                include: {
-                  votes: true,
-                },
-              });
-            }}
-          />
-        </Suspense>
-
-        <div className="sm:w-0 w-full flex-1 bg-white p-4 rounded-sm">
-          <p className="max-h-40 mt-1 truncate text-xs text-gray-500">
+      <div className="h-full flex flex-col sm:flex-row items-center sm:items-start justify-between dark:bg-[#111113]">
+        <div className="sm:w-0 w-full flex-1 bg-white p-4 rounded-sm dark:bg-[var(--image-cover)] shadow">
+          <p className="max-h-40 mt-1 truncate text-xs text-gray-500 dark:text-[var(--fade-light)]">
             Posted by u/{post?.author.username ?? cachedPost.authorUsername}{" "}
             {formatTimeToNow(new Date(post?.createdAt ?? cachedPost.createdAt))}
           </p>
-          <h1 className="text-xl font-semibold py-2 leading-6 text-gray-900">
+          <h1 className="text-xl font-semibold py-2 leading-6 text-[#45C99A]">
             {post?.title ?? cachedPost.title}
           </h1>
-
-          <EditorOutput content={post?.content ?? cachedPost.content} />
+          <div className="my-5">
+            <EditorOutput content={post?.content ?? cachedPost.content} />
+          </div>
+          <Suspense fallback={<PostVoteShell />}>
+            {/* @ts-expect-error server component */}
+            <PostVoteServer
+              postId={post?.id ?? cachedPost.id}
+              getData={async () => {
+                return await db.post.findUnique({
+                  where: {
+                    id: params.postId,
+                  },
+                  include: {
+                    votes: true,
+                  },
+                });
+              }}
+            />
+          </Suspense>
           <Suspense
             fallback={
               <Loader2 className="h-5 w-5 animate-spin text-zinc-500" />

@@ -78,7 +78,7 @@ const PostVoteClient = ({
   });
 
   return (
-    <div className="flex flex-col gap-4 sm:gap-0 pr-6 sm:w-20 pb-4 sm:pb-0">
+    <div className="flex items-center  gap-4  pr-6  ">
       {/* upvote */}
       <Button
         onClick={() => vote("UP")}
@@ -87,14 +87,14 @@ const PostVoteClient = ({
         aria-label="upvote"
       >
         <ArrowBigUp
-          className={cn("h-5 w-5 text-zinc-700", {
+          className={cn("h-5 w-5 text-zinc-700 dark:text-slate-300", {
             "text-emerald-500 fill-emerald-500": currentVote === "UP",
           })}
         />
       </Button>
 
       {/* score */}
-      <p className="text-center py-2 font-medium text-sm text-zinc-900">
+      <p className="text-center py-2 font-medium text-sm text-zinc-900 dark:text-gray-300">
         {votesAmt}
       </p>
 
@@ -109,7 +109,7 @@ const PostVoteClient = ({
         aria-label="downvote"
       >
         <ArrowBigDown
-          className={cn("h-5 w-5 text-zinc-700", {
+          className={cn("h-5 w-5 text-zinc-700 dark: text-slate-300", {
             "text-red-500 fill-red-500": currentVote === "DOWN",
           })}
         />
